@@ -53,8 +53,8 @@ class RBM(object):
 
 	def sampHgivenV(self, vis):
 		_, hidprob = self.propup(vis)
-		hidsamp = self.theano_rng.binomial(
-			size=hidprob.shape, avg=hidprob, std=1.0, dtype=self.dtype
+		hidsamp = hidprob + self.theano_rng.binomial(
+			size=hidprob.shape, avg=0, std=1.0, dtype=self.dtype
 		) #hidden unit sampling (normal)
 		return hidprob, hidsamp
 
@@ -99,7 +99,7 @@ class RBM(object):
 			(self.v_bias_inc, v_bias_inc)
 		]
 		return err, updates
-	
+
 	def encode(self):
 		data = T.matrix('data', dtype=self.dtype)
 		_, code = self.propup(data)
