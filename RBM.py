@@ -81,7 +81,7 @@ class RBM(object):
 		neg_vis = T.mean(negdata, axis=0)
 		neg_hid = T.mean(neghidprob, axis=0)
 
-		cross_entropy = 
+		cross_entropy = log
 
 
 
