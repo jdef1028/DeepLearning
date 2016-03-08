@@ -9,7 +9,7 @@ import theano.tensor as T
 import theano.sandbox.rng_mrg
 
 os.environ['THEANO_FLAGS'] = 'device=cpu, floatX=float32'
-class RBM(object):
+class RBMhidlinear(object):
 	def __init__(self, input=None, n_vis=2, n_hid=3, W=None, v_bias=None, h_bias=None, rng=None):
 
 		self.dtype = theano.config.floatX
@@ -53,8 +53,8 @@ class RBM(object):
 
 	def sampHgivenV(self, vis):
 		_, hidprob = self.propup(vis)
-		hidsamp = hidprob + self.theano_rng.binomial(
-			size=hidprob.shape, avg=0, std=1.0, dtype=self.dtype
+		hidsamp = self.theano_rng.normal(
+			size = hidprob.shape, avg = hidprob, dtype=self.dtype
 		) #hidden unit sampling (normal)
 		return hidprob, hidsamp
 
