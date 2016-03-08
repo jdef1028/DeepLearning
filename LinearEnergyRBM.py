@@ -1,5 +1,5 @@
 __author__ = 'xiaolin'
-__author__ = 'xiaolin'
+
 
 # Binary-binary Restricted Boltzmann Machine unit
 
@@ -10,7 +10,7 @@ import theano.tensor as T
 import theano.sandbox.rng_mrg
 
 os.environ['THEANO_FLAGS'] = 'device=cpu, floatX=float32'
-class GRBM(object):
+class RBM(object):
 	def __init__(self, input=None, n_vis=2, n_hid=3, W=None, v_bias=None, h_bias=None, rng=None):
 
 		self.dtype = theano.config.floatX
@@ -60,7 +60,6 @@ class GRBM(object):
 		return hidprob, hidsamp
 
 
-
 	# define RBM updates
 	def get_updates(self, data, lr = 0.1, weightcost= 2e-4, momentum=0.5):
 
@@ -79,7 +78,7 @@ class GRBM(object):
 		# negative phase
 		_, negdata = self.propdown(poshidsamp)
 		_, neghidprob = self.propup(negdata)
-		negw = T.dot(negdata.T, neghidprob) /numcases
+		negw = T.dot(negdata.T, neghidprob)
 		neg_vis = T.mean(negdata, axis=0)
 		neg_hid = T.mean(neghidprob, axis=0)
 
