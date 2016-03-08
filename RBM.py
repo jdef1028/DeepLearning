@@ -59,8 +59,9 @@ class RBM(object):
 		return hidprob, hidsamp
 
 
+
 	# define RBM updates
-	def get_updates(self, data, lr = 0.1, weightcost= 2e-4, momentum=0.5):
+	def get_updates(self, data, lr=0.01, weightcost=2e-4, momentum=0.5):
 
 		numcases = T.cast(data.shape[0], self.dtype)
 		lr = T.cast(lr, self.dtype)
@@ -77,7 +78,7 @@ class RBM(object):
 		# negative phase
 		_, negdata = self.propdown(poshidsamp)
 		_, neghidprob = self.propup(negdata)
-		negw = T.dot(negdata.T, neghidprob)
+		negw = T.dot(negdata.T, neghidprob) / numcases
 		neg_vis = T.mean(negdata, axis=0)
 		neg_hid = T.mean(neghidprob, axis=0)
 
