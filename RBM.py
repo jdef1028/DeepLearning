@@ -81,7 +81,42 @@ class RBM(object):
 		neg_vis = T.mean(negdata, axis=0)
 		neg_hid = T.mean(neghidprob, axis=0)
 
-		cross_entropy = log
+		#error measurement
+		rmse = T.sqrt(T.mean((data - negdata) ** 2, axis=1))
+		err = T.mean(rmse)
 
+		#updates
+		Winc = momentum * self.Winc + lr * (posw - negw - weightcost*self.W)
+		v_bias_inc = momentum * self.v_bias + lr * (pos_vis - neg_vis)
+		h_bias_inc = momentum * self.h_bias + lr * (pos_hid - neg_hid)
 
+		updates = [
+			(self.W, self.W + Winc),
+			(self.h_bias, self.h_bias + self.h_bias_inc),
+			(self.v_bias, self.v_bias + self.v_bias_inc),
+			(self.Winc, Winc),
+			(self.h_bias_inc, h_bias_inc),
+			(self.v_bias_inc, v_bias_inc)
+		]
+		return err, updates
+	def encode(self):
+		data = T.matrix('data', dtype=self.dtype)
+		_, code = self.propup(data)
+		return theano.function([data], code)
 
+	def decode(self):
+		codes = T.matrix('codes', dtype=self.dtype)
+		_, data = self.propdown(codes)
+		return theano.function([codes], data)
+
+	def pretrain(self, batches, data, n_epochs=10, **train_params):
+		data = T.matrix('data', dtype=self.dtype)
+		cost, updates = self.get_updates(data, **train_params)
+		train_rbm = theano.function([data], cost, updates=updates)
+
+		for epoch in xrange(n_epochs):
+			costs = []
+			for batch in batches:
+				costs.append(train_rbm(batch))
+			print "Epoch %d: %0.3f" % (epoch+1, np.mean(costs))
+		self.representation = self.encode(data)
