@@ -43,6 +43,45 @@ class RBM(object):
 		self.h_bias_inc = theano.shared(np.zeros_like(h_bias), name='h_bias_inc')
 		self.v_bias_inc = theano.shared(np.zeros_like(v_bias), name='v_bias_inc')
 
-		
+	def propup(self, vis):
+		pre_act = T.dot(vis, self.W) + self.h_bias
+		return pre_act, T.nnet.sigmoid(pre_act)
+
+	def propdown(self, hid):
+		pre_act = T.dot(hid, self.W.T) + self.v_bias
+		return pre_act, T.nnet.sigmoid(pre_act)
+
+	def sampHgivenV(self, vis):
+		_, hidprob = self.propup(vis)
+		hidsamp = self.theano_rng.binomial(
+			size=hidprob.shape, n=1, p=hidprob, dtype=self.dtype
+		) #hidden unit sampling
+		return hidprob, hidsamp
+
+
+	# define RBM updates
+	def get_updates(self, data, lr = 0.1, weightcost= 2e-4, momentum=0.5):
+
+		numcases = T.cast(data.shape[0], self.dtype)
+		lr = T.cast(lr, self.dtype)
+		weightcost = T.cast(weightcost, self.dtype)
+		momentum = T.cast(momentum, self.dtype)
+
+		# positive phase
+		poshidprob, poshidsamp = self.sampHgivenV(data)
+
+		posw = T.dot(data.T, poshidprob) / numcases
+		pos_vis = T.mean(data, axis=0)
+		pos_hid = T.mean(poshidprob, axis=0)
+
+		# negative phase
+		_, negdata = self.propdown(poshidsamp)
+		_, neghidprob = self.propup(negdata)
+		negw = T.dot(negdata.T, neghidprob)
+		neg_vis = T.mean(negdata, axis=0)
+		neg_hid = T.mean(neghidprob, axis=0)
+
+		cross_entropy = 
+
 
 

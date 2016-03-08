@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e46d8bd-3e6b-4027-a1b3-fa5d0818c872" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/RBM.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RBM.py" afterPath="$PROJECT_DIR$/RBM.py" />
     </list>
     <ignored path="RBM.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,8 +28,8 @@
       <file leaf-file-name="RBM.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RBM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7916667" vertical-offset="162" max-vertical-offset="810">
-              <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.8611111" vertical-offset="687" max-vertical-offset="1395">
+              <caret line="83" column="24" selection-start-line="83" selection-start-column="24" selection-end-line="83" selection-end-column="24" />
               <folding>
                 <element signature="e#75#93#0" expanded="true" />
               </folding>
@@ -293,8 +293,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/RBM.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7916667" vertical-offset="162" max-vertical-offset="810">
-          <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.8611111" vertical-offset="687" max-vertical-offset="1395">
+          <caret line="83" column="24" selection-start-line="83" selection-start-column="24" selection-end-line="83" selection-end-column="24" />
           <folding>
             <element signature="e#75#93#0" expanded="true" />
           </folding>
